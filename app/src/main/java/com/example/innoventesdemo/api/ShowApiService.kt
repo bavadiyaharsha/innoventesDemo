@@ -24,8 +24,8 @@ class ShowApiService {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         if (retrofit == null) {
-            val builder = OkHttpClient.Builder().readTimeout(110, TimeUnit.SECONDS)
-                .connectTimeout(110, TimeUnit.SECONDS).writeTimeout(110, TimeUnit.SECONDS)
+            val builder = OkHttpClient.Builder().readTimeout(1110, TimeUnit.SECONDS)
+                .connectTimeout(1110, TimeUnit.SECONDS).writeTimeout(1110, TimeUnit.SECONDS)
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             builder.addInterceptor(object : Interceptor {

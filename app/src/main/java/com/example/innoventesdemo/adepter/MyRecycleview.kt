@@ -36,7 +36,7 @@ class MyRecycleview(var searchlist: List<Search>, var context: Context) :
 
             context.let {
                 Glide.with(it)
-                    .load(Uri.parse("file:///android_asset/" + searchlist.get(position).Poster))
+                    .load(searchlist.get(position).Poster)
                     .placeholder(R.drawable.placeholder_for_missing_posters)
                     .error(R.drawable.placeholder_for_missing_posters)
                     .into(holder.binding.image)

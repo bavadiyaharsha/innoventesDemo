@@ -4,22 +4,23 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.innoventesdemo.api.ShowApiService
+import com.example.innoventesdemo.model.search.Search
 import com.example.innoventesdemo.model.search.SearchResponse
-import com.example.innoventesdemo.repo.ShowDataSourceFactory
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.ArrayList
 
-class ActivityViewModel(val showDataSourceFactory: ShowDataSourceFactory):ViewModel() {
+class ActivityViewModel:ViewModel() {
 
     var message= MutableLiveData<String>()
     var errormsg= MutableLiveData<String>()
     var isLoading=MutableLiveData<Boolean>()
+    var contentlist = MutableLiveData<List<Search>>()
 
 
-    fun loadinit( key:String, page:Int,s:String){
+    fun loadinit(s:String, page:Int,key:String){
         isLoading.value=true
         val userDataService = ShowApiService.instance?.api
         val call: Call<SearchResponse?>? = userDataService!!.getSearchResults(s,page,key)
@@ -29,11 +30,10 @@ class ActivityViewModel(val showDataSourceFactory: ShowDataSourceFactory):ViewMo
                 response: Response<SearchResponse?>
             ) {
                 if (response.isSuccessful) {
-                    val electronicParam = response.body()
-
-                } else {
-                    val errorbody= response.errorBody()
-
+                    val list = response.body()
+                    if(list!=null){
+                        contentlist.value=list.Search
+                    }
                 }
                 isLoading.value = false
 
