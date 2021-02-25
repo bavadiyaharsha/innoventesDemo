@@ -84,17 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        mBookmarkList!!.observe(this, Observer {
-            bookMarkAdepter = BookMarkAdepter(
-                it as List<ShowSearchDetails>,
-                applicationContext,
-                { selsectItem: ShowSearchDetails ->
-                    bookMarkerlistItemClick(
-                        selsectItem
-                    )
-                })
-            binding.bookmarkRecylerView.adapter = bookMarkAdepter
-        })
+
     }
 
     private fun bookMarkerlistItemClick(selsectItem: ShowSearchDetails) {
@@ -146,6 +136,18 @@ class MainActivity : AppCompatActivity() {
 
                 binding.bookmarkLayout.visibility = View.VISIBLE
                 binding.laylist.visibility = View.GONE
+
+                mBookmarkList!!.observe(this, Observer {
+                    bookMarkAdepter = BookMarkAdepter(
+                        it as List<ShowSearchDetails>,
+                        applicationContext,
+                        { selsectItem: ShowSearchDetails ->
+                            bookMarkerlistItemClick(
+                                selsectItem
+                            )
+                        })
+                    binding.bookmarkRecylerView.adapter = bookMarkAdepter
+                })
             }
 
         }
