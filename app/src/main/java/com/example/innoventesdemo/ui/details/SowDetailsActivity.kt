@@ -48,8 +48,8 @@ class SowDetailsActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
 
-            binding.actors.text=it.Actors
-            binding.director.text=it.Director
+            binding.actors.text="Actors :"+it.Actors
+            binding.director.text="Director"+it.Director
 
 
 
