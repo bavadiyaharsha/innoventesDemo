@@ -29,12 +29,17 @@ class ActivityViewModel:ViewModel() {
                 call: Call<SearchResponse?>?,
                 response: Response<SearchResponse?>
             ) {
-                if (response.isSuccessful) {
-                    val list = response.body()
-                    if(list!=null){
-                        contentlist.value=list.Search
+                try {
+                    if (response.isSuccessful) {
+                        val list = response.body()
+                        if (list != null) {
+                            contentlist.value = list.Search
+                        }
+                    } else {
+
                     }
-                }
+
+                }catch (e:Exception){}
                 isLoading.value = false
 
             }

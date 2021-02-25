@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this).get(ActivityViewModel::class.java)
         initRecyclerView()
+        supportActionBar!!.title=""
         viewModel.loadinit(mSearchKey, pageCount, Constants.API_KEY)
-
 
         viewModel.isLoading.observe(this, Observer {
             if (!it) {
@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
                 binding.laylist.visibility = View.VISIBLE
 
                 binding.llLoadMoreProgress.setVisibility(View.GONE)
+                if(!viewModel.contentlist.value.isNullOrEmpty()){
                 arrayList.addAll(viewModel.contentlist.value as ArrayList<Search>)
                 if (arrayList.isNotEmpty()) {
                     try {
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                     } catch (e: Exception) {
                         binding.laylist.visibility = View.GONE
                     }
+                }
                 } else {
                     binding.laylist.visibility = View.GONE
                 }
@@ -108,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             R.id.bookmark -> {
 
                 binding.bookmarkLayout.visibility = View.VISIBLE
-                binding.recyclerView.visibility = View.GONE
+                binding.laylist.visibility = View.GONE
             }
 
         }
@@ -125,7 +127,7 @@ class MainActivity : AppCompatActivity() {
         arrayList = ArrayList()
 
         //for grid Partitioning
-        if (resources.configuration.orientation === Configuration.ORIENTATION_PORTRAIT) {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             linearLayoutManager = GridLayoutManager(this, 3)
         } else {
             linearLayoutManager = GridLayoutManager(this, 7)

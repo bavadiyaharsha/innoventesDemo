@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:background="@android:color/black"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -27,7 +28,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="TextView"
-                android:textColor="@android:color/black"
+                android:gravity="center_horizontal"
+                android:textColor="@android:color/white"
                 android:textSize="14sp"
                 />
         </LinearLayout>
