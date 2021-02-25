@@ -34,9 +34,8 @@ public class ShowSearchDetails
     {
     }
 
-    public ShowSearchDetails(int _id, String title, String year, String imdbID, String poster)
+    public ShowSearchDetails(String title, String year, String imdbID, String poster)
     {
-        this._id = _id;
         this.title = title;
         this.year = year;
         this.imdbID = imdbID;

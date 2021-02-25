@@ -3,8 +3,6 @@ package com.example.innoventesdemo.ui.details
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.innoventesdemo.api.ShowApiService
-import com.example.innoventesdemo.model.search.Search
-import com.example.innoventesdemo.model.search.SearchResponse
 import com.example.innoventesdemo.model.showdetails.ShowDetails
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,10 +14,10 @@ class SowDetailsViewModel:ViewModel() {
     var contents = MutableLiveData<ShowDetails>()
 
 
-    fun details(s:String,key:String){
+    fun details(s: String, key: String){
         isLoading.value=true
         val userDataService = ShowApiService.instance?.api
-        val call: Call<ShowDetails?>? = userDataService!!.getShowDetails(s,key)
+        val call: Call<ShowDetails?>? = userDataService!!.getShowDetails(s, key)
         call!!.enqueue(object : Callback<ShowDetails?> {
             override fun onResponse(
                 call: Call<ShowDetails?>?,
@@ -33,7 +31,8 @@ class SowDetailsViewModel:ViewModel() {
                         }
                     }
 
-                }catch (e:Exception){}
+                } catch (e: Exception) {
+                }
                 isLoading.value = false
 
             }

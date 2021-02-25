@@ -31,6 +31,8 @@ class ShowRepository private constructor(application: Context) {
     fun insertBookMark(showSearchDetails: ShowSearchDetails?): Boolean {
         var result = true
         try {
+            Log.i(TAG, "insert record")
+
             bookMarkDatabase.dao!!.insertBookmark(showSearchDetails)
         } catch (e: Exception) {
             result = false
