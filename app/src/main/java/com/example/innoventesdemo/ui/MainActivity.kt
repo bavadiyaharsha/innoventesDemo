@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     private var mShowRepository: ShowRepository? = null
 
     private var pageCount = 1
-    var mSearchKey:String="Avenger"
+    var mSearchKey: String = "Avenger"
     private lateinit var arrayList: ArrayList<Search>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,10 +48,9 @@ class MainActivity : AppCompatActivity() {
         mShowRepository = ShowRepository.getInstance(application)
 
         initRecyclerView()
-        supportActionBar!!.title=""
-        if(Utils.checkInternetConnection(applicationContext))
-        viewModel.loadinit(mSearchKey, pageCount, Constants.API_KEY)
-        mBookmarkList = mShowRepository!!.allBookMark as LiveData<List<ShowSearchDetails>>
+        supportActionBar!!.title = ""
+        if (Utils.checkInternetConnection(applicationContext))
+            viewModel.loadinit(mSearchKey, pageCount, Constants.API_KEY)
         viewModel.isLoading.observe(this, Observer {
             if (!it) {
                 binding.progressBar1.visibility = View.GONE
@@ -86,17 +85,20 @@ class MainActivity : AppCompatActivity() {
         })
 
         mBookmarkList!!.observe(this, Observer {
-            bookMarkAdepter = BookMarkAdepter(it as List<ShowSearchDetails>, applicationContext, { selsectItem: ShowSearchDetails ->
-                bookMarkerlistItemClick(
-                    selsectItem
-                )
-            })
+            bookMarkAdepter = BookMarkAdepter(
+                it as List<ShowSearchDetails>,
+                applicationContext,
+                { selsectItem: ShowSearchDetails ->
+                    bookMarkerlistItemClick(
+                        selsectItem
+                    )
+                })
             binding.bookmarkRecylerView.adapter = bookMarkAdepter
         })
     }
 
     private fun bookMarkerlistItemClick(selsectItem: ShowSearchDetails) {
-        var intent= Intent(this@MainActivity, SowDetailsActivity::class.java)
+        var intent = Intent(this@MainActivity, SowDetailsActivity::class.java)
         intent.putExtra("id", selsectItem.imdbID)
         startActivity(intent)
     }
@@ -134,12 +136,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        when(item.itemId){
+        when (item.itemId) {
             R.id.action_search -> {
 
 
             }
             R.id.bookmark -> {
+                mBookmarkList = mShowRepository!!.allBookMark as LiveData<List<ShowSearchDetails>>
 
                 binding.bookmarkLayout.visibility = View.VISIBLE
                 binding.laylist.visibility = View.GONE
@@ -161,7 +164,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun listItemClick(selsectItem: Search) {
-        var intent= Intent(this@MainActivity, SowDetailsActivity::class.java)
+        var intent = Intent(this@MainActivity, SowDetailsActivity::class.java)
         intent.putExtra("id", selsectItem.imdbID)
         startActivity(intent)
     }
@@ -229,13 +232,13 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-        /*    if () {
+            /*    if () {
 
-                } else {
-                binding.llLoadMoreProgress.setVisibility(View.GONE)
-                binding.loadmsg.setVisibility(View.VISIBLE)
+                    } else {
+                    binding.llLoadMoreProgress.setVisibility(View.GONE)
+                    binding.loadmsg.setVisibility(View.VISIBLE)
 
-            }*/
+                }*/
 
         } catch (e: java.lang.Exception) {
         }

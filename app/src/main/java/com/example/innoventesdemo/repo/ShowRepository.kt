@@ -2,6 +2,7 @@ package com.example.innoventesdemo.repo
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.Room
@@ -19,18 +20,20 @@ import retrofit2.Response
 /**
  * class to handle bookmark db
  */
-class ShowRepository private constructor(application: Context) {
+class ShowRepository  constructor(application: Context) {
     private val DB_NAME = "showdb"
     private val bookMarkDatabase: BookMarkDatabase
     var showDetailList: LiveData<List<ShowSearchDetails>>
     private val mService: ShowApiService
-
+var context:Context=application
     /**
      * insert data in bookmark table
      */
     fun insertBookMark(showSearchDetails: ShowSearchDetails?): Boolean {
         var result = true
         try {
+
+            Toast.makeText(context,"Bookmark this movie",Toast.LENGTH_LONG).show()
             Log.i(TAG, "insert record")
 
             bookMarkDatabase.dao!!.insertBookmark(showSearchDetails)
