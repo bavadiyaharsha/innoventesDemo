@@ -1,6 +1,7 @@
 package com.example.roomdemo.adepter
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.example.innoventesdemo.R
 import com.example.innoventesdemo.databinding.ShowlistItemBinding
 
 import com.example.innoventesdemo.model.search.Search
+import com.example.innoventesdemo.ui.details.SowDetailsActivity
 import java.io.InputStream
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,10 +43,15 @@ class MyRecycleview(var searchlist: List<Search>, var context: Context) :
                     .error(R.drawable.placeholder_for_missing_posters)
                     .into(holder.binding.image)
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
+        holder.binding.listItemLayout.setOnClickListener {
+            var intent=Intent(context, SowDetailsActivity::class.java)
+            intent.putExtra("id",searchlist.get(position).imdbID)
+            context.startActivity(intent)
+        }
         holder.binding(searchlist[position])
     }
 
