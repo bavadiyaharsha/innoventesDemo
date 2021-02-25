@@ -13,11 +13,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.innoventesdemo.R
 import com.example.innoventesdemo.databinding.ActivityMainBinding
 import com.example.innoventesdemo.model.search.Search
 import com.example.innoventesdemo.util.Constants
 import com.example.roomdemo.adepter.MyRecycleview
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: ActivityViewModel
@@ -136,4 +138,71 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+
+    private fun setScrollListener() {
+        //if user scroll the load more item from next page
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                val lastvisibleitemposition: Int? =
+                    linearLayoutManager?.findLastVisibleItemPosition()
+
+                if (adepter != null) {
+
+                    if (lastvisibleitemposition == adepter.getItemCount() - 1) {
+
+                        if (!loading) {
+                            loading = true
+                            viewModel.isLoading.value = true
+                            callApi()
+                        }
+                    }
+                }
+            }
+
+        })
+    }
+
+    private fun callApi() {
+        try {
+            if (pageCount == 1) {
+                arrayList.clear()
+                binding.progressBar1.visibility = View.VISIBLE
+                binding.laylist.visibility = View.GONE
+                binding.llLoadMoreProgress.setVisibility(View.VISIBLE)
+            } else {
+                binding.progressBar1.visibility = View.GONE
+                binding.laylist.visibility = View.VISIBLE
+                binding.llLoadMoreProgress.setVisibility(View.VISIBLE)
+                binding.loadmsg.setVisibility(View.GONE)
+
+                viewModel.loadinit(mSearchKey, pageCount, Constants.API_KEY)
+
+
+            }
+
+        /*    if () {
+
+                } else {
+                binding.llLoadMoreProgress.setVisibility(View.GONE)
+                binding.loadmsg.setVisibility(View.VISIBLE)
+
+            }*/
+
+        } catch (e: java.lang.Exception) {
+        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+
+        callApi()
+        setScrollListener()
+
+
+    }
+
 }
