@@ -40,20 +40,6 @@ class ShowRepository private constructor(application: Context) {
     }
 
     /**
-     * delete data from bookmark db
-     */
-    fun deleteBookMark(showSearchDetails: ShowSearchDetails?): Boolean {
-        var result = true
-        try {
-            bookMarkDatabase.dao!!.deleteBookmark(showSearchDetails)
-        } catch (e: Exception) {
-            result = false
-            Log.i(TAG, "Exception while inserting bookmark $e")
-        }
-        return result
-    }
-
-    /**
      * fetch all bookmarks from DB
      *
      * @return
