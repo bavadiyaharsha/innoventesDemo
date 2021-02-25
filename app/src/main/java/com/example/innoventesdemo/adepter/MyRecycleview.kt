@@ -22,7 +22,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class MyRecycleview(var searchlist: List<Search>, var context: Context) :
+class MyRecycleview(var searchlist: List<Search>, var context: Context,val clickLister: (Search) -> Unit) :
     RecyclerView.Adapter<MyViewHolder>() {
 
 
@@ -48,9 +48,7 @@ class MyRecycleview(var searchlist: List<Search>, var context: Context) :
             e.printStackTrace()
         }
         holder.binding.listItemLayout.setOnClickListener {
-            var intent=Intent(context, SowDetailsActivity::class.java)
-            intent.putExtra("id",searchlist.get(position).imdbID)
-            context.startActivity(intent)
+            clickLister(searchlist.get(position))
         }
         holder.binding(searchlist[position])
     }

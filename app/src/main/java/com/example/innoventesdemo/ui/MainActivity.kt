@@ -1,6 +1,7 @@
 package com.example.innoventesdemo.ui
 
 import android.app.SearchManager
+import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.innoventesdemo.R
 import com.example.innoventesdemo.databinding.ActivityMainBinding
 import com.example.innoventesdemo.model.search.Search
+import com.example.innoventesdemo.ui.details.SowDetailsActivity
 import com.example.innoventesdemo.util.Constants
+import com.example.innoventesdemo.util.Utils
 import com.example.roomdemo.adepter.MyRecycleview
 import com.google.gson.Gson
 
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(ActivityViewModel::class.java)
         initRecyclerView()
         supportActionBar!!.title=""
+        if(Utils.checkInternetConnection(applicationContext))
         viewModel.loadinit(mSearchKey, pageCount, Constants.API_KEY)
 
         viewModel.isLoading.observe(this, Observer {
@@ -121,10 +125,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setAdapter(arrayList: ArrayList<Search>) {
-        adepter = MyRecycleview(arrayList, applicationContext)
+        adepter = MyRecycleview(arrayList, applicationContext,{ selsectItem: Search -> listItemClick(selsectItem) })
         binding.recyclerView.adapter = adepter
 
     }
+
+    private fun listItemClick(selsectItem: Search) {
+        var intent= Intent(this@MainActivity, SowDetailsActivity::class.java)
+        intent.putExtra("id",selsectItem.imdbID)
+        startActivity(intent)
+    }
+
     private fun initRecyclerView() {
         arrayList = ArrayList()
 
